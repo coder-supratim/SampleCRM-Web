@@ -1,0 +1,201 @@
+﻿@using NWTradersWeb.Models;
+
+@model IEnumerable<Product>
+
+@{
+
+    ViewBag.Title = "NW traders Products";
+
+    List<SelectListItem> allCategories = NWTradersUtilities.AllCategories(ViewBag.searchCategoryName);
+
+    Employee currentEmployee = Session["currentEmployee"] as Employee;
+
+
+}
+
+
+<h2 style="text-align: center">@ViewBag.Title</h2>
+<br />
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        @Html.ActionLink("Create a New Product", "Create", "Products", new { @class = "btn btn-primary" })
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextBox("searchProductName", ViewBag.CurrentFilter as string,
+                     new
+                     {
+                         @class = "form-control",
+                         @name = "searchProductName",
+                         @placeholder = "Search by Product Name",
+                         onchange = "document.location.href = '/Products/Index?searchProductName=' + this.value;"
+                     })
+
+    </div>
+
+    <div class="col-md-4">
+
+        Search by Category:
+        @Html.DropDownList("allCategories", allCategories,
+        new
+        {
+            @class = "custom-select-sm",
+            @style = "width:50%",
+            @type = "submit",
+            onchange = "document.location.href = '/Products/Index?searchCategoryName=' + this.options[this.selectedIndex].text;"
+        })
+
+    </div>
+
+</div>
+<br />
+
+<div class="row">
+
+    <div class="col-md-8">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitsInStock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Discontinued)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitsInStock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discontinued)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("edit", "Edit", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("info_outline", "Details", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("delete_outline", "Delete", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("add_shopping_cart", "AddProduct", "Employees", new { @productID = item.ProductID }, new { @class = "material-icons md-8" })
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+
+
+    <div class="col-md-4">
+
+        <table class="table">
+            <tr class="text-center">
+                <th colspan="5">
+                    <i class="material-icons align-bottom ">shopping_cart</i>
+                    Shopping Cart
+                </th>
+            </tr>
+
+            @if (currentEmployee != null)
+            {
+                if (currentEmployee.theCurrentOrder != null)
+                {
+                    if (currentEmployee.theCurrentOrder.Order_Details != null)
+                    {
+                        if (currentEmployee.theCurrentOrder.Order_Details.Count > 0)
+                        {
+
+                            <tr class="text-center">
+                                <td> Product </td>
+                                <td> Quantity</td>
+                                <td> Price  </td>
+                                <td> Total  </td>
+                                <td> &nbsp; </td>
+
+                            </tr>
+                            foreach (Order_Detail item in currentEmployee.theCurrentOrder.Order_Details)
+                            {
+                                <tr class="text-center" style="font-size: small">
+                                    <td> @Html.DisplayFor(od => item.Product.ProductName) </td>
+                                    <td>  @Html.DisplayFor(od => @item.Quantity)</td>
+                                    <td>  @Html.DisplayFor(od => @item.UnitPrice) </td>
+                                    <td>  @Html.DisplayFor(o => @item.Total) </td>
+                                    <td>
+                                        @Html.ActionLink("remove_circle", "RemoveProduct", "Employees", new { @productid = item.ProductID }, new { @class = "material-icons md-12 " })
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td colspan="5">
+                                    <div class="py-2 text-right">
+                                        Total: @Html.DisplayFor(model => currentEmployee.theCurrentOrder.orderTotal)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center" colspan="5 ">
+                                    <button class="btn-light">
+
+                                        @Html.ActionLink("Confirm Order", "Confirm", "Orders", new { },
+                                       new { onclick = "return confirm('Are you sure about adding order?');" })
+
+                                    </button>
+
+                                    <button class="btn-light">
+
+                                        @Html.ActionLink("Cancel Order", "Cancel", "Orders", new { },
+                                       new { onclick = "return confirm('Are you sure about deleting order?');" })
+
+                                    </button>
+
+
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="text-center" colspan="5 ">
+                                    Your cart is empty
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+
+
+
+        </table>
+
+    </div>
+
+
+</div>

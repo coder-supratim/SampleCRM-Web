@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <!-- This link allows you to use google material icons in your site -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+<body>
+    <!-- The common header will appear on all pages.-->
+    <nav class="navbar container shadow-lg rounded-lg py-4" style="background-color: palegoldenrod">
+
+        <div class="container-fluid">
+            <div class="h1">Northwind Traders </div>
+            <div class="lead">Your one stop shop for delectable eats and delightful beverages.</div>
+        </div>
+        <!-- spacer-->
+        <div class="">&nbsp;</div>
+
+        <div class="input-group-append" style="">
+            <div type=" button" class="btn btn-light  rounded shadow-lg">
+                <i class="material-icons  align-text-bottom">home</i>
+                @Html.ActionLink("Home", "Index", "Home")
+            </div>
+
+            <!-- spacer-->
+            <div>                &nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div type=" button" class="btn btn-light  rounded shadow-lg">
+                <i class="material-icons align-text-bottom">business</i>
+                @Html.ActionLink("NW Traders Customers", "Index", "Customers")
+            </div>
+            
+    <!-- spacer-->
+            <div>                &nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div type=" button" class="btn btn-light  rounded shadow-lg"
+                title=" Products will go here">
+                <i class="material-icons align-text-bottom">business</i>
+                @Html.ActionLink("NW Traders Products", "Index", "Home")
+            </div>
+            <!-- spacer-->
+            <div>                &nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div type=" button" class="btn btn-light  rounded shadow-lg"
+                 title=" Orders will go here">
+                <i class="material-icons align-text-bottom">shopping_basket</i>
+                @Html.ActionLink("NW Traders Orders", "Index", "Home")
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- spacer-->
+    <div>&nbsp;</div>
+
+    <!-- main body for all pages-->
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+
+
+        <footer class="card-footer shadow-lg text-center" style="background-color: steelblue">
+            <div class ="">
+                <img src="~/images/UNCG.png" width="150" height="40" alt="Alternate Text" />
+                &nbsp;&nbsp;
+
+                    &copy; @DateTime.Now.Year - ISM 672 Northwind Traders Web Application
+            </div>
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿@using NWTradersWeb.Models;
+
+@model IEnumerable<Employee>
+
+@{
+
+
+    ViewBag.Title = "NW traders Employees";
+
+    List<SelectListItem> allCountries = NWTradersUtilities.AllCountries(ViewBag.searchCountryName);
+
+
+}
+
+
+
+<h2 style="text-align: center">@ViewBag.Title</h2>
+<br />
+
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        @Html.ActionLink("Create a New Employee", "Create", "Employees", new { @class = "btn btn-primary" })
+    </div>
+
+    <div class="col-md-4">
+        @Html.TextBox("searchLastName", ViewBag.CurrentFilter as string,
+                     new
+                     {
+                         @class = "form-control",
+                         @placeholder = "Search by Last Name",
+                         onchange = "document.location.href = '/Employees/Index?searchLastName=' + this.value;"
+                     })
+
+    </div>
+
+    <div class="col-md-4">
+
+        Search by Country:
+        @Html.DropDownList("allCountries", allCountries,
+     new
+     {
+         @class = "custom-select-sm",
+         @style = "width:50%",
+         onchange = "document.location.href = '/Employees/Index?searchCountryName=' + this.options[this.selectedIndex].value;"
+     })
+
+    </div>
+
+</div>
+
+<hr />
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Region)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.ActionLink("edit", "Edit", "Employees", new { @id = item.EmployeeID }, new { @class = "material-icons md-12" })
+            </td>
+            <td>
+                @Html.ActionLink("info_outline", "Details", "Employees", new { @id = item.EmployeeID }, new { @class = "material-icons md-12" })
+            </td>
+            <td>
+                @Html.ActionLink("delete_outline", "Delete", "Employees", new { @id = item.EmployeeID }, new { @class = "material-icons md-12" })
+            </td>
+        </tr>
+    }
+
+</table>

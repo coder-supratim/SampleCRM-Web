@@ -1,0 +1,163 @@
+﻿@using NWTradersWeb.Models;
+
+@model NWTradersWeb.Models.Employee
+
+@{
+    ViewBag.Title = "Your Dashboard";
+
+    Employee currenEmployee = (Employee)Session["currentEmployee"];
+
+    List<Order> currentEmployeeOrders = ViewBag.currentEmployeeOrders;
+    List<Product> currentEmployeeRecentProducts = ViewBag.currentEmployeeRecentProducts;
+    List<Product> currentEmployeeFrequentProducts = ViewBag.currentEmployeeFrequentProducts;
+
+}
+
+
+<h2 style="text-align: center">@ViewBag.Title</h2>
+<br />
+
+
+<div class="card-deck shadow py-2">
+
+    <div class="card">
+        <!-- Employee information -->
+        </br>
+        <div class="card" style="width: 20rem; text-align: center">
+            <div class="card-header">
+                Employee Information
+            </div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Last Name: &nbsp; <b>@currenEmployee.LastName</b> </li>
+                <li class="list-group-item">First Name: &nbsp; <b>@currenEmployee.FirstName </b></li>
+                <!-- You can add more information here -->
+            </ul>
+
+        </div>
+        </br>
+        @Html.ActionLink("More Details", "Details", "Employees", new { @class = "btn btn-secondary " })
+
+    </div>
+
+    <div class="card">
+        <!-- Most Recent Orders -->
+        </br>
+
+        <div class="card" style="width: 20rem; text-align: center">
+            <div class="card-header">
+                Recent Orders
+            </div>
+
+            <table class="table-bordered table-striped" style="font-size:small">
+                <tr>
+                    <th>Date <br /> Placed</th>
+                    <th>Order <br /> Total</th>
+                    <th>View <br /> Details</th>
+
+                </tr>
+
+                @foreach (Order o in currentEmployeeOrders)
+                {
+                    <tr class="py-3 text-center ">
+
+                        <td class="w3-padding-small py-2">
+                            @Html.DisplayFor(item => o.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => o.orderTotal)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Orders", new { @id = o.OrderID }, new { @class = "btn-sm btn-dark", @style = "font-size:small" })
+                        </td>
+                    </tr>
+
+                }
+            </table>
+
+        </div>
+        </br>
+        @Html.ActionLink("More Details", "Details", "Orders", new { @class = "btn btn-secondary " })
+
+    </div>
+
+
+    <div class="card">
+        <!-- Most Recent Products  -->
+        </br>
+
+        <div class="card" style="width: 20rem; text-align: center">
+            <div class="card-header">
+                Recent Products
+            </div>
+
+            <table class="table-bordered table-striped" style="font-size:small">
+                <tr>
+                    <th>Name </th>
+                    <th>Discontinued </th>
+                    <th>View <br /> Details</th>
+
+                </tr>
+
+                @foreach (Product p in currentEmployeeRecentProducts)
+                {
+                    <tr class="py-3 text-center ">
+
+                        <td class="w3-padding-small py-2">
+                            @Html.DisplayFor(item => p.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => p.Discontinued)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Products", new { @id = p.ProductID }, new { @class = "btn-sm btn-dark", @style = "font-size:small" })
+                        </td>
+                    </tr>
+
+                }
+            </table>
+
+        </div>
+        <!-- Most Frequent Products  -->
+        </br>
+
+        <div class="card" style="width: 20rem; text-align: center">
+            <div class="card-header">
+                Frequent Products
+            </div>
+
+            <table class="table-bordered table-striped" style="font-size:small">
+                <tr>
+                    <th>Name </th>
+                    <th>Discontinued </th>
+                    <th>View <br /> Details</th>
+
+                </tr>
+
+                @foreach (Product p in currentEmployeeFrequentProducts)
+                {
+                    <tr class="py-3 text-center ">
+
+                        <td class="w3-padding-small py-2">
+                            @Html.DisplayFor(item => p.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(item => p.Discontinued)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Products", new { @id = p.ProductID }, new { @class = "btn-sm btn-dark", @style = "font-size:small" })
+                        </td>
+                    </tr>
+
+                }
+            </table>
+
+        </div>
+        </br>
+        @Html.ActionLink("More Details", "Details", "Products", new { @class = "btn btn-secondary " })
+    </div>
+
+</div>

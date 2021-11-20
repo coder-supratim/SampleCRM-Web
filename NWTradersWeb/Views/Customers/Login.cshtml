@@ -1,0 +1,94 @@
+﻿@using NWTradersWeb.Models;
+
+@model Customer
+@{
+
+    ViewBag.Title = "North Wind Traders Customer Login.";
+    SelectList allCustomerContactNames = new SelectList(NWTradersUtilities.AllCustomerContactNames());
+
+    string CompanyName = ViewBag.CompanyName as string;
+
+    string customerIDMessage = ViewBag.customerIDMessage as string;
+
+
+}
+
+
+<div class="container alert-light p-2">
+    <hr />
+</div>
+
+<table class="container" style="width:80%">
+
+    <tr class="">
+        <td class="">
+            <div class="text-center h2">
+                Welcome to North Wind Traders.
+            </div>
+        </td>
+
+        <td class="container shadow rounded-lg" style="width:50%">
+
+            <!-- Begin Login Form -->
+            @using (Html.BeginForm())
+            {
+
+
+                <div class="card-header shadow text-center py-4" style="background-color: palegoldenrod">
+                    <h4> Please Select your Company Name and Password to continue.</h4>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body align-items-center border ">
+                    <br />
+                    <!-- User Name-->
+                    <div class="input-group-sm">
+
+                        @Html.DropDownList("CompanyName", allCustomerContactNames as SelectList,
+                                new
+                                     {
+                                    @class = "custom-select",
+                                    @type = "submit",
+                                    onchange = "this.form.submit();"
+                                })
+                    </div>
+
+                    <br />
+                    <!-- Password -->
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label " })
+
+
+                        @Html.PasswordFor(model => model.CustomerID,
+                       new { @class = "form-control ", @style = "font-size: small", placeholder = "Enter Password (Customer ID)" })
+
+
+
+                    </div>
+
+
+                </div>
+
+                <!-- Login or Cancel -->
+                <div class="card-footer text-center">
+                    <input type="submit" value="Login"
+                           class="btn btn-dark btn-outline-secondary" />
+
+                    <input type="submit" value="Logout"
+                           class="btn btn-light btn-outline-secondary" />
+
+                </div>
+
+            }
+        </td>
+
+    </tr>
+</table>
+
+<div class="container alert-light p-2">
+    <hr />
+</div>
+
+
+
+
