@@ -178,7 +178,7 @@ namespace NWTradersWeb.Controllers
         {
             if (string.IsNullOrEmpty(companyName))
             {
-                ViewBag.co = "Please select your Company Name";
+                ViewBag.companyName = "Please select your Company Name";
                 return View();
             }
 
@@ -317,7 +317,7 @@ namespace NWTradersWeb.Controllers
             {
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Overview", "Customers", new { @id = customer.CustomerID });
             }
             return View(customer);
         }

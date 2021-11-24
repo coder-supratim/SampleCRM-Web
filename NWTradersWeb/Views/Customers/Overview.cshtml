@@ -22,7 +22,7 @@
 
     <div class="card">
         <!-- Customer information -->
-        </br>
+        <br/>
         <div class="card" style="width: 20rem; text-align: center">
             <div class="card-header">
                 Customer Information
@@ -30,19 +30,28 @@
 
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Company Name: &nbsp; <b>@currentCustomer.CompanyName</b> </li>
+                <li class="list-group-item">Contact Title: &nbsp; <b>@currentCustomer.ContactTitle </b></li>
                 <li class="list-group-item">Contact Name: &nbsp; <b>@currentCustomer.ContactName </b></li>
+                <li class="list-group-item">Address: &nbsp; <b>@currentCustomer.Address </b></li>
+                <li class="list-group-item">City: &nbsp; <b>@currentCustomer.City</b></li>
+                <li class="list-group-item">Postal Code: &nbsp; <b>@currentCustomer.PostalCode </b></li>
+                <li class="list-group-item">Region: &nbsp; <b>@currentCustomer.Region </b></li>
+                <li class="list-group-item">Country: &nbsp; <b>@currentCustomer.Country </b></li>
+                <li class="list-group-item">Phone: &nbsp; <b>@currentCustomer.Phone</b></li>
+                <li class="list-group-item">Fax: &nbsp; <b>@currentCustomer.Fax</b></li>
+
                 <!-- You can add more information here -->
             </ul>
 
         </div>
-        </br>
-        @Html.ActionLink("More Details", "Details", "Customers", new { @class = "btn btn-secondary " })
+        <br/>
 
+        @Html.ActionLink("Update Customer Details", "Edit", new { id = @currentCustomer.CustomerID }, new { @class = "btn btn-secondary " }) 
     </div>
 
     <div class="card">
         <!-- Most Recent Orders -->
-        </br>
+        <br/>
 
         <div class="card" style="width: 20rem; text-align: center">
             <div class="card-header">
@@ -77,7 +86,7 @@
             </table>
 
         </div>
-        </br>
+        <br/>
         @Html.ActionLink("More Details", "Details", "Orders", new { @class = "btn btn-secondary " })
 
     </div>
@@ -121,7 +130,7 @@
 
         </div>
         <!-- Most Frequent Products  -->
-        </br>
+        <br/>
 
         <div class="card" style="width: 20rem; text-align: center">
             <div class="card-header">

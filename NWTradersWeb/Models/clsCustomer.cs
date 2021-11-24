@@ -30,8 +30,23 @@ namespace NWTradersWeb.Models
         [StringLength(20)]
         public string CompanyName;
 
-        
+        [Display(Name = "Contact Name")]
+        [StringLength(30)]
+        public string ContactName;
 
+        [Display(Name = "Postal Code")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Postal Code cannot be all letters")]
+        [StringLength(10)]
+        public string PostalCode;
+
+        [Display(Name = "Phone")]
+        [Phone]
+        [StringLength(24)]
+        public string Phone;
+
+        [Display(Name = "Country")]
+        [StringLength(15)]
+        public string Country;
     }
 
     [MetadataType(typeof(CustomerMetadata))]
