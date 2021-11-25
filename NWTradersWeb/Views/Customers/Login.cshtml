@@ -39,35 +39,39 @@
                 </div>
 
                 <!--Card content-->
-                <div class="card-body align-items-center border ">
-                    <br />
-                    <!-- User Name-->
-                    <div class="input-group-sm">
+        <div class="card-body align-items-center border ">
+            <br />
+            <!-- User Name-->
+            <div class="input-group-sm">
 
-                        @Html.DropDownList("CompanyName", allCustomerContactNames as SelectList,
-                                new
-                                     {
-                                    @class = "custom-select",
-                                    @type = "submit",
-                                    onchange = "this.form.submit();"
-                                })
-                    </div>
+                @Html.DropDownList("CompanyName", allCustomerContactNames as SelectList,
+                        new
+                             {
+                            @class = "custom-select",
+                            @type = "submit",
+                            onchange = "this.form.submit();"
+                        })
+            </div>
 
-                    <br />
-                    <!-- Password -->
-                    <div class="form-group ">
-                        @Html.LabelFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label " })
-
-
-                        @Html.PasswordFor(model => model.CustomerID,
-                       new { @class = "form-control ", @style = "font-size: small", placeholder = "Enter Password (Customer ID)" })
+            <br />
+            <!-- Password -->
+            <div class="form-group ">
+                @Html.LabelFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label " })
 
 
+                @Html.PasswordFor(model => model.CustomerID,
+               new { @class = "form-control ", @style = "font-size: small", placeholder = "Enter Password (Customer ID)" })
 
-                    </div>
 
 
-                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(customerIDMessage))
+            {
+                <div class="alert-danger">@customerIDMessage</div>
+            }
+
+
+        </div>
 
                 <!-- Login or Cancel -->
                 <div class="card-footer text-center">

@@ -128,6 +128,41 @@ namespace NWTradersWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        //[HttpPost, ActionName("Confirm")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult OrderConfirmed()
+        //{
+        //    Customer currentCustomer = Session["currentCustomer"] as Customer;
+        //    Order order = currentCustomer.theCurrentOrder;
+        //    db.Orders.Add(order);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Overview", "Customers", new { @id = currentCustomer.CustomerID });
+        //}
+
+        public ActionResult Confirm()
+        {
+            // I need to make sure the employee is still in the session - cant add a product to an order without a employee.
+            Customer currentCustomer = Session["currentCustomer"] as Customer;
+            if (currentCustomer == null)
+                return RedirectToAction("Login", "Customers");
+
+            //The employee should have a current order, if not then this is the first product in the cart.
+            if (currentCustomer.theCurrentOrder == null)
+                return RedirectToAction("Index", "Products", new { });
+
+            //currentCustomer.theCurrentOrder.EmployeeID = NWTradersUtilities.orderEmployeeID;
+
+            //int? tmp = currentEmployee.theCurrentOrder.EmployeeID;
+
+            Create(currentCustomer.theCurrentOrder);
+
+            currentCustomer.theCurrentOrder = null;
+
+            return RedirectToAction("Index", "Products", new { });
+
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

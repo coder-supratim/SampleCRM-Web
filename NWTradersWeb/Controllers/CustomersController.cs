@@ -22,7 +22,7 @@ namespace NWTradersWeb.Controllers
             // I need to make sure the employee is still in the session - cant add a product to an order without a employee.
             Customer currentCustomer = Session["currentCustomer"] as Customer;
             if (currentCustomer == null)
-                return RedirectToAction("Login", "Customer", new { @CompanyName = "", @CustomerID = "" });
+                return RedirectToAction("Login", "Customers", new { @CompanyName = "", @CustomerID = "" });
 
             //The employee should have a current order, if not then this is the first product in the cart.
             if (currentCustomer.theCurrentOrder == null)
@@ -66,7 +66,18 @@ namespace NWTradersWeb.Controllers
 
             return RedirectToAction("Index", "Products");
         }
+        public List<int> AllOrderIDs()
+        {
+            List<int> allOrderIDs = new List<int>();
 
+            foreach (Order o in db.Orders)
+            {
+                allOrderIDs.Add(o.OrderID);
+            }
+
+
+            return allOrderIDs;
+        }
         public void CreateCurrentOrder()
         {
 
@@ -84,7 +95,7 @@ namespace NWTradersWeb.Controllers
                     OrderDate = DateTime.Today,
                     CustomerID = currentCustomer.CustomerID,
 
-                    //OrderID = AllOrderIDs().Max() + 1,
+                    OrderID = AllOrderIDs().Max() + 1,
 
                     // Add some defaults to the new order.
                     RequiredDate = DateTime.Today.AddDays(14),
@@ -189,7 +200,7 @@ namespace NWTradersWeb.Controllers
             }
 
             Customer currentCustomer = db.Customers.Where(c => c.CompanyName.Equals(companyName)).
-                Where(c => c.CustomerID.ToString().Equals(customerID)).Select(e => e).FirstOrDefault();
+                Where(c => c.CustomerID.ToString().Equals(customerID)).Select(c => c).FirstOrDefault();
 
             Session["currentCustomer"] = currentCustomer;
 

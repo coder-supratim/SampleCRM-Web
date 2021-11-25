@@ -14,13 +14,17 @@ namespace NWTradersWeb.Models
 
         [Display(Name = "Product ID")]
         [Required(ErrorMessage = "The Product ID is required")]
-        [StringLength(5, MinimumLength = 3, ErrorMessage = "Product ID must have atleast 3 characters")]
         public int ProductID;
 
         [Display(Name = "Product Name")]
         [Required(ErrorMessage = "The Product Name is required")]
         [StringLength(20)]
         public string ProductName;
+
+        [Display(Name = "Quantity Per Unit")]
+        [Required(ErrorMessage = "Quantity Per Unit is required")]
+        [StringLength(20)]
+        public string QuantityPerUnit;
 
     }
 

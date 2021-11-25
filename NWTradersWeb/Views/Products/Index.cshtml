@@ -8,7 +8,7 @@
 
     List<SelectListItem> allCategories = NWTradersUtilities.AllCategories(ViewBag.searchCategoryName);
 
-    Employee currentEmployee = Session["currentEmployee"] as Employee;
+    Customer currentCustomer = Session["currentCustomer"] as Customer;
 
 
 }
@@ -78,6 +78,9 @@
 
             @foreach (var item in Model)
             {
+                if (!item.Discontinued)
+                {
+
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductName)
@@ -101,11 +104,12 @@
                         @Html.ActionLink("delete_outline", "Delete", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
                     </td>
                     <td>
-                        @Html.ActionLink("add_shopping_cart", "AddProduct", "Employees", new { @productID = item.ProductID }, new { @class = "material-icons md-8" })
+                        @Html.ActionLink("add_shopping_cart", "AddProduct", "Customers", new { @productID = item.ProductID }, new { @class = "material-icons md-8" })
                     </td>
 
                 </tr>
-            }
+                    }
+                }
 
         </table>
     </div>
@@ -121,13 +125,13 @@
                 </th>
             </tr>
 
-            @if (currentEmployee != null)
+            @if (currentCustomer != null)
             {
-                if (currentEmployee.theCurrentOrder != null)
+                if (currentCustomer.theCurrentOrder != null)
                 {
-                    if (currentEmployee.theCurrentOrder.Order_Details != null)
+                    if (currentCustomer.theCurrentOrder.Order_Details != null)
                     {
-                        if (currentEmployee.theCurrentOrder.Order_Details.Count > 0)
+                        if (currentCustomer.theCurrentOrder.Order_Details.Count > 0)
                         {
 
                             <tr class="text-center">
@@ -138,7 +142,7 @@
                                 <td> &nbsp; </td>
 
                             </tr>
-                            foreach (Order_Detail item in currentEmployee.theCurrentOrder.Order_Details)
+                            foreach (Order_Detail item in currentCustomer.theCurrentOrder.Order_Details)
                             {
                                 <tr class="text-center" style="font-size: small">
                                     <td> @Html.DisplayFor(od => item.Product.ProductName) </td>
@@ -146,7 +150,7 @@
                                     <td>  @Html.DisplayFor(od => @item.UnitPrice) </td>
                                     <td>  @Html.DisplayFor(o => @item.Total) </td>
                                     <td>
-                                        @Html.ActionLink("remove_circle", "RemoveProduct", "Employees", new { @productid = item.ProductID }, new { @class = "material-icons md-12 " })
+                                        @Html.ActionLink("remove_circle", "RemoveProduct", "Customers", new { @productid = item.ProductID }, new { @class = "material-icons md-12 " })
                                     </td>
                                 </tr>
                             }
@@ -154,7 +158,7 @@
                             <tr>
                                 <td colspan="5">
                                     <div class="py-2 text-right">
-                                        Total: @Html.DisplayFor(model => currentEmployee.theCurrentOrder.orderTotal)
+                                        Total: @Html.DisplayFor(model => currentCustomer.theCurrentOrder.orderTotal)
                                     </div>
                                 </td>
                             </tr>
