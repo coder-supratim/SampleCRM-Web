@@ -30,7 +30,7 @@ namespace NWTradersWeb.Models
                 odWithProduct = new Order_Detail
                 {
                     ProductID = productToAdd.ProductID,
-                    Product = productToAdd,
+                    
 
                     Order = this,
                     OrderID = this.OrderID,

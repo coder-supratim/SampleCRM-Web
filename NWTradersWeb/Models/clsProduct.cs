@@ -26,6 +26,10 @@ namespace NWTradersWeb.Models
         [StringLength(20)]
         public string QuantityPerUnit;
 
+        [Display(Name = "Units In Stock")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Units In Stock cannot contain letters")]
+        public int UnitsInStock;
+
     }
 
     [MetadataType(typeof(ProductMetadata))]

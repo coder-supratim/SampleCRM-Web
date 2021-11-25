@@ -35,7 +35,7 @@ namespace NWTradersWeb.Models
         public string ContactName;
 
         [Display(Name = "Postal Code")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Postal Code cannot be all letters")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Postal Code cannot contain letters")]
         [StringLength(10)]
         public string PostalCode;
 

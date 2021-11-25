@@ -7,6 +7,7 @@
     ViewBag.Title = "NW traders Products";
 
     List<SelectListItem> allCategories = NWTradersUtilities.AllCategories(ViewBag.searchCategoryName);
+    List<SelectListItem> allSalesPersonnel = NWTradersUtilities.AllSalesPersonnels();
 
     Customer currentCustomer = Session["currentCustomer"] as Customer;
 
@@ -160,6 +161,26 @@
                                     <div class="py-2 text-right">
                                         Total: @Html.DisplayFor(model => currentCustomer.theCurrentOrder.orderTotal)
                                     </div>
+                                </td>
+                            </tr>
+
+                            <tr >
+                                <td colspan="4">
+
+
+                                    Select a Sales Representative:
+
+
+                                    @Html.DropDownList("allSalesPersonnel", allSalesPersonnel,
+        new
+        {
+            @class = "custom-select-sm",
+            @style = "width:50%",
+            @type = "submit",
+            onchange = "document.location.href = '/Orders/AddSalesPerson?salesPerson=' + this.options[this.selectedIndex].text;"
+        })
+
+
                                 </td>
                             </tr>
 

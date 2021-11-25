@@ -25,7 +25,32 @@ namespace NWTradersWeb.Models
 
             return allSalesPersonnel;
         }
+ public static List<SelectListItem> AllSalesPersonnels()
+        {
+            List<SelectListItem> allSalesPersonnels = new List<SelectListItem>();
 
+            var queryResults =
+            (from e in nwEntities.Employees
+             where string.Equals(e.Title, "Sales Representative")
+             select new { FullName = e.FirstName + " " + e.LastName + "- EmpId: " + e.EmployeeID }).Distinct();
+
+            foreach (var item in queryResults)
+            {
+                if (!string.IsNullOrEmpty(item.FullName))
+                {
+                    SelectListItem si = 
+                        new SelectListItem
+                        {
+                            Text = item.FullName
+                        };
+                    allSalesPersonnels.Add(si);
+                }
+            }
+
+            
+
+            return allSalesPersonnels;
+        }
 
         public static List<Order> FindOrderForCustomer(string customerID)
         {

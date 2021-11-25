@@ -43,14 +43,11 @@
             <br />
             <!-- User Name-->
             <div class="input-group-sm">
+                @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label " })
 
-                @Html.DropDownList("CompanyName", allCustomerContactNames as SelectList,
-                        new
-                             {
-                            @class = "custom-select",
-                            @type = "submit",
-                            onchange = "this.form.submit();"
-                        })
+                @Html.DropDownList("CompanyName", allCustomerContactNames as SelectList, htmlAttributes: new { @class = "form-control" })
+
+
             </div>
 
             <br />

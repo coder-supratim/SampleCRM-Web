@@ -17,9 +17,37 @@ namespace NWTradersWeb.Controllers
         // GET: Orders
         public ActionResult Index()
         {
+            Customer currentCustomer = Session["currentCustomer"] as Customer;
             var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee).Include(o => o.Shipper);
+
+            if (currentCustomer != null)
+            {
+                 orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee).Include(o => o.Shipper).Where(o => o.CustomerID.Equals(currentCustomer.CustomerID));
+
+            }
+
             return View(orders.ToList());
         }
+
+        public ActionResult Cancel()
+        {
+            // I need to make sure the customer is still in the session - cant add a product to an order without a customer.
+            Customer currentCustomer = Session["currentCustomer"] as Customer;
+            if (currentCustomer == null)
+                return RedirectToAction("Login", "Customers");
+
+            //The customer should have a current order, if not then this is the first product in the cart.
+            if (currentCustomer.theCurrentOrder == null)
+                return RedirectToAction("Index", "Products", new { });
+
+            currentCustomer.theCurrentOrder = null;
+
+            return RedirectToAction("Index", "Products", new { });
+
+        }
+
+        // GET: Orders
+       
 
         // GET: Orders/Details/5
         public ActionResult Details(int? id)
@@ -138,6 +166,21 @@ namespace NWTradersWeb.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Overview", "Customers", new { @id = currentCustomer.CustomerID });
         //}
+        public ActionResult AddSalesPerson(string salesPerson)
+        {
+            Customer currentCustomer = Session["currentCustomer"] as Customer;
+            if (currentCustomer == null) { return RedirectToAction("Login", "Customers");}
+                
+
+            Order or = currentCustomer.theCurrentOrder;
+            Char[] separator = { ':' };
+
+            if (!String.IsNullOrEmpty(salesPerson) && null != or)
+            {
+                or.EmployeeID = Convert.ToInt32(salesPerson.Split(separator)[1].Trim());
+            }
+            return RedirectToAction("Index", "Products");
+        }
 
         public ActionResult Confirm()
         {
@@ -145,10 +188,12 @@ namespace NWTradersWeb.Controllers
             Customer currentCustomer = Session["currentCustomer"] as Customer;
             if (currentCustomer == null)
                 return RedirectToAction("Login", "Customers");
+            
+           
 
             //The employee should have a current order, if not then this is the first product in the cart.
             if (currentCustomer.theCurrentOrder == null)
-                return RedirectToAction("Index", "Products", new { });
+                return RedirectToAction("Index", "Products");
 
             //currentCustomer.theCurrentOrder.EmployeeID = NWTradersUtilities.orderEmployeeID;
 
@@ -158,7 +203,7 @@ namespace NWTradersWeb.Controllers
 
             currentCustomer.theCurrentOrder = null;
 
-            return RedirectToAction("Index", "Products", new { });
+            return RedirectToAction("Index", "Products");
 
         }
 

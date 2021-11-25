@@ -51,7 +51,7 @@
 
     <div class="card">
         <!-- Most Recent Orders -->
-        <br/>
+        <br />
 
         <div class="card" style="width: 20rem; text-align: center">
             <div class="card-header">
@@ -86,8 +86,8 @@
             </table>
 
         </div>
-        <br/>
-        @Html.ActionLink("Buy Product", "Index", "Products") 
+        <br />
+        @Html.ActionLink("Buy Product", "Index", "Products", new { }, new { @class = "btn btn-dark" })
 
     </div>
 
@@ -166,7 +166,7 @@
 
         </div>
         </br>
-        @Html.ActionLink("View Cart", "Index", "Products", new { @class = "btn btn-secondary" })
+        @Html.ActionLink("Order History", "Index", "Orders", new { }, new { @class = "btn btn-secondary" })
     </div>
 
 </div>
