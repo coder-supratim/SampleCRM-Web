@@ -65,7 +65,7 @@ namespace NWTradersWeb.Controllers
                 or.EmployeeID = Convert.ToInt32(salesPersonName.Split(separator)[1].Trim());
             }
             ViewBag.salesPersonName = salesPersonName;
-            return View();
+            return View("Index");
         }
 
         // GET: Products/Details/5
