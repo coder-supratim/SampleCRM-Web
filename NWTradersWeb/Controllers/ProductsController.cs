@@ -18,8 +18,7 @@ namespace NWTradersWeb.Controllers
         public ActionResult Index(string searchProductName = "", string searchCategoryName = "")
         {
 
-
-            IEnumerable<Product> theProducts = db.Products.
+            IEnumerable <Product> theProducts = db.Products.
                 OrderBy(p => p.ProductName).
                 Select(p => p).ToList();
 
@@ -52,7 +51,22 @@ namespace NWTradersWeb.Controllers
 
             return View(theProducts.ToList());
         }
+        public ActionResult AddSalesPerson(string salesPersonName)
+        {
+            Customer currentCustomer = Session["currentCustomer"] as Customer;
+            if (currentCustomer == null) { return RedirectToAction("Login", "Customers"); }
 
+
+            Order or = currentCustomer.theCurrentOrder;
+            Char[] separator = { ':' };
+
+            if (!String.IsNullOrEmpty(salesPersonName) && null != or)
+            {
+                or.EmployeeID = Convert.ToInt32(salesPersonName.Split(separator)[1].Trim());
+            }
+            ViewBag.salesPersonName = salesPersonName;
+            return View();
+        }
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)

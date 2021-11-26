@@ -80,10 +80,11 @@ namespace NWTradersWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OrderID,CustomerID,EmployeeID,OrderDate,RequiredDate,ShippedDate,ShipVia,Freight,ShipName,ShipAddress,ShipCity,ShipRegion,ShipPostalCode,ShipCountry")] Order order)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && isValidQunatity(order))
             {
                 db.Orders.Add(order);
                 db.SaveChanges();
+                Session["productPageMessage"] = "Order placed successfully with order ID: " + order.OrderID;
                 return RedirectToAction("Index");
             }
 
@@ -91,6 +92,22 @@ namespace NWTradersWeb.Controllers
             ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "LastName", order.EmployeeID);
             ViewBag.ShipVia = new SelectList(db.Shippers, "ShipperID", "CompanyName", order.ShipVia);
             return View(order);
+        }
+
+        private bool isValidQunatity(Order order)
+        {
+            
+            foreach (Order_Detail od in order.Order_Details)
+            {
+                Product prod = NWTradersUtilities.getProductById(od.ProductID);
+                if (prod.UnitsInStock != null && od.Quantity > prod.UnitsInStock)
+                {
+                    Session["productPageMessage"] = "Sorry, Not enough product available!"
+                        + " Please reduce Quantity of " + prod.ProductName + "  to " + prod.UnitsInStock;
+                    return false;
+                }
+            }
+            return true;
         }
 
         // GET: Orders/Edit/5
@@ -166,21 +183,7 @@ namespace NWTradersWeb.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Overview", "Customers", new { @id = currentCustomer.CustomerID });
         //}
-        public ActionResult AddSalesPerson(string salesPerson)
-        {
-            Customer currentCustomer = Session["currentCustomer"] as Customer;
-            if (currentCustomer == null) { return RedirectToAction("Login", "Customers");}
-                
-
-            Order or = currentCustomer.theCurrentOrder;
-            Char[] separator = { ':' };
-
-            if (!String.IsNullOrEmpty(salesPerson) && null != or)
-            {
-                or.EmployeeID = Convert.ToInt32(salesPerson.Split(separator)[1].Trim());
-            }
-            return RedirectToAction("Index", "Products");
-        }
+ 
 
         public ActionResult Confirm()
         {
@@ -188,8 +191,9 @@ namespace NWTradersWeb.Controllers
             Customer currentCustomer = Session["currentCustomer"] as Customer;
             if (currentCustomer == null)
                 return RedirectToAction("Login", "Customers");
-            
-           
+
+            Session["productPageMessage"] = "";
+
 
             //The employee should have a current order, if not then this is the first product in the cart.
             if (currentCustomer.theCurrentOrder == null)

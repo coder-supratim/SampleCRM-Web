@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -22,7 +21,8 @@ namespace NWTradersWeb.Models
                 Where(od => od.ProductID == productToAdd.ProductID).
                 Select(od => od).
                 FirstOrDefault();
-
+            Random rand = new Random();
+            int number = rand.Next(1, 10);
             if (odWithProduct == null)
             {
                 // If the order detail is not found, then it doesnt exist in the database - 
@@ -34,8 +34,9 @@ namespace NWTradersWeb.Models
 
                     Order = this,
                     OrderID = this.OrderID,
+                
 
-                    Discount = 0F,
+                Discount = float.Parse("0."+ number),
 
                     UnitPrice = productToAdd.UnitPrice.Value,
                     Quantity = 1

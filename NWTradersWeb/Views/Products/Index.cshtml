@@ -7,9 +7,10 @@
     ViewBag.Title = "NW traders Products";
 
     List<SelectListItem> allCategories = NWTradersUtilities.AllCategories(ViewBag.searchCategoryName);
-    List<SelectListItem> allSalesPersonnel = NWTradersUtilities.AllSalesPersonnels();
+    List<SelectListItem> allSalesPersonnel = NWTradersUtilities.AllSalesPersonnels(ViewBag.salesPersonName);
 
     Customer currentCustomer = Session["currentCustomer"] as Customer;
+    string productPageMessage = Session["productPageMessage"] as string;
 
 
 }
@@ -117,7 +118,13 @@
 
 
     <div class="col-md-4">
-
+        @if (!string.IsNullOrEmpty(productPageMessage))
+        {
+            if (productPageMessage.Contains("Sorry"))
+            {<div class="alert-danger">@productPageMessage</div> }
+            else
+            {<div class="alert-info">@productPageMessage</div>}
+        }
         <table class="table">
             <tr class="text-center">
                 <th colspan="5">
@@ -139,19 +146,24 @@
                                 <td> Product </td>
                                 <td> Quantity</td>
                                 <td> Price  </td>
+                                <td> Discount</td>
                                 <td> Total  </td>
                                 <td> &nbsp; </td>
-
+                                <td> &nbsp; </td>
                             </tr>
                             foreach (Order_Detail item in currentCustomer.theCurrentOrder.Order_Details)
                             {
                                 <tr class="text-center" style="font-size: small">
-                                    <td> @Html.DisplayFor(od => item.Product.ProductName) </td>
+                                    <td> @Html.DisplayFor(od => NWTradersUtilities.getProductById(@item.ProductID).ProductName) </td>
                                     <td>  @Html.DisplayFor(od => @item.Quantity)</td>
                                     <td>  @Html.DisplayFor(od => @item.UnitPrice) </td>
+                                    <td>  @Html.DisplayFor(od => @item.Discount) </td>
                                     <td>  @Html.DisplayFor(o => @item.Total) </td>
                                     <td>
                                         @Html.ActionLink("remove_circle", "RemoveProduct", "Customers", new { @productid = item.ProductID }, new { @class = "material-icons md-12 " })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("add_circle", "AddProduct", "Customers", new { @productid = item.ProductID }, new { @class = "material-icons md-12 " })
                                     </td>
                                 </tr>
                             }
@@ -164,7 +176,7 @@
                                 </td>
                             </tr>
 
-                            <tr >
+                            <tr>
                                 <td colspan="4">
 
 
@@ -175,9 +187,9 @@
         new
         {
             @class = "custom-select-sm",
-            @style = "width:50%",
+            @style = "width:80%",
             @type = "submit",
-            onchange = "document.location.href = '/Orders/AddSalesPerson?salesPerson=' + this.options[this.selectedIndex].text;"
+            onchange = "document.location.href = '/Products/AddSalesPerson?salesPersonName=' + this.options[this.selectedIndex].text;"
         })
 
 

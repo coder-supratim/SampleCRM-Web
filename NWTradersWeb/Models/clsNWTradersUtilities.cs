@@ -11,6 +11,13 @@ namespace NWTradersWeb.Models
 
         private static NorthwindEntities nwEntities = new NorthwindEntities();
 
+        public static Product getProductById(int productId)
+        {
+            return nwEntities.Products.Where(p => p.ProductID == productId)
+                .Select(p => p)
+                .FirstOrDefault();
+
+        }
 
         public static List<string> AllSalesPersonnel()
         {
@@ -25,7 +32,7 @@ namespace NWTradersWeb.Models
 
             return allSalesPersonnel;
         }
- public static List<SelectListItem> AllSalesPersonnels()
+ public static List<SelectListItem> AllSalesPersonnels(string salesPersonName)
         {
             List<SelectListItem> allSalesPersonnels = new List<SelectListItem>();
 
@@ -47,7 +54,10 @@ namespace NWTradersWeb.Models
                 }
             }
 
-            
+            if (string.IsNullOrEmpty(salesPersonName) == false)
+            {
+                allSalesPersonnels.Find(c => c.Text == salesPersonName).Selected = true;
+            }
 
             return allSalesPersonnels;
         }

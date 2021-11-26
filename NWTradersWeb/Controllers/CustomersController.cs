@@ -18,7 +18,7 @@ namespace NWTradersWeb.Controllers
 
         public ActionResult AddProduct(int productID)
         {
-
+            Session["productPageMessage"] = "";
             // I need to make sure the employee is still in the session - cant add a product to an order without a employee.
             Customer currentCustomer = Session["currentCustomer"] as Customer;
             if (currentCustomer == null)
