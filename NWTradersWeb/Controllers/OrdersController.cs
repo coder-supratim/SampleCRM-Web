@@ -82,6 +82,17 @@ namespace NWTradersWeb.Controllers
         {
             if (ModelState.IsValid && isValidQunatity(order))
             {
+                foreach(Order_Detail od in order.Order_Details)
+                {
+                    Product product = db.Products.Find(od.ProductID);
+                    if (product.UnitsInStock.GetValueOrDefault() > od.Quantity)
+                    {
+                        product.UnitsInStock = Convert.ToInt16(product.UnitsInStock.GetValueOrDefault() - od.Quantity);
+                        db.Entry(product).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                }
                 db.Orders.Add(order);
                 db.SaveChanges();
                 Session["productPageMessage"] = "Order placed successfully with order ID: " + order.OrderID;

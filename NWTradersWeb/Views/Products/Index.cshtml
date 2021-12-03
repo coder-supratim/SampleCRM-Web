@@ -1,6 +1,6 @@
 ﻿@using NWTradersWeb.Models;
 
-@model IEnumerable<Product>
+@model IEnumerable<NWTradersWeb.Models.Product>
 
 @{
 
@@ -83,35 +83,35 @@
                 if (!item.Discontinued)
                 {
 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitsInStock)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Discontinued)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                    </td>
-                    <td>
-                        @Html.ActionLink("edit", "Edit", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("info_outline", "Details", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("delete_outline", "Delete", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("add_shopping_cart", "AddProduct", "Customers", new { @productID = item.ProductID }, new { @class = "material-icons md-8" })
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitsInStock)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Discontinued)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("edit", "Edit", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("info_outline", "Details", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("delete_outline", "Delete", "Products", new { @id = item.ProductID }, new { @class = "material-icons md-8" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("add_shopping_cart", "AddProduct", "Customers", new { @productID = item.ProductID }, new { @class = "material-icons md-8" })
+                        </td>
 
-                </tr>
-                    }
+                    </tr>
                 }
+            }
 
         </table>
     </div>
@@ -122,9 +122,9 @@
         {
             if (productPageMessage.Contains("Sorry"))
             {<div class="alert-danger">@productPageMessage</div> }
-            else
-            {<div class="alert-info">@productPageMessage</div>}
-        }
+        else
+        {<div class="alert-info">@productPageMessage</div>}
+}
         <table class="table">
             <tr class="text-center">
                 <th colspan="5">
@@ -171,7 +171,7 @@
                             <tr>
                                 <td colspan="5">
                                     <div class="py-2 text-right">
-                                        Total: @Html.DisplayFor(model => currentCustomer.theCurrentOrder.orderTotal)
+                                        Total: @Html.DisplayFor(model => currentCustomer.theCurrentOrder.OrderTotal)
                                     </div>
                                 </td>
                             </tr>
@@ -201,14 +201,14 @@
                                     <button class="btn-light">
 
                                         @Html.ActionLink("Confirm Order", "Confirm", "Orders", new { },
-                                       new { onclick = "return confirm('Are you sure about adding order?');" })
+                                       new { onclick = "return confirm('Please review and confirm your order');" })
 
                                     </button>
 
                                     <button class="btn-light">
 
                                         @Html.ActionLink("Cancel Order", "Cancel", "Orders", new { },
-                                       new { onclick = "return confirm('Are you sure about deleting order?');" })
+                                       new { onclick = "return confirm('Are you sure about deleting this order?');" })
 
                                     </button>
 

@@ -45,6 +45,8 @@ namespace NWTradersWeb.Models
                 // Add the new order detail to the current order.
                 this.Order_Details.Add(odWithProduct);
 
+                
+
             }
             // Otherwise, increment quantity.
             else
@@ -78,7 +80,7 @@ namespace NWTradersWeb.Models
         }
 
 
-        public decimal orderTotal
+        public decimal OrderTotal
         {
             get
             { return this.Order_Details.Sum(od => ((od.UnitPrice - (decimal)od.Discount) * od.Quantity)); }

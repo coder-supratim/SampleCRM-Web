@@ -187,23 +187,27 @@ namespace NWTradersWeb.Controllers
 
         public ActionResult Login(string companyName, string customerID)
         {
+           if (null != Request.Cookies["customerCookie"])
+            {
+                companyName = Request.Cookies["customerCookie"]["companyName"];
+                customerID = Request.Cookies["customerCookie"]["customerID"];
+            }
+
             if (string.IsNullOrEmpty(companyName))
             {
                 ViewBag.companyName = "Please select your Company Name";
+
                 return View();
             }
-
             if (string.IsNullOrEmpty(customerID))
             {
                 ViewBag.customerIDMessage = "Please enter a valid Custome ID";
                 return View();
             }
-
             Customer currentCustomer = db.Customers.Where(c => c.CompanyName.Equals(companyName)).
                 Where(c => c.CustomerID.ToString().Equals(customerID)).Select(c => c).FirstOrDefault();
 
             Session["currentCustomer"] = currentCustomer;
-
             if (currentCustomer == null)
             {
                 ViewBag.customerIDMessage = "The Customer ID you entered is not valid. Please " +
@@ -212,9 +216,12 @@ namespace NWTradersWeb.Controllers
             }
             else
             {
+                Response.Cookies["customerCookie"]["companyName"] = companyName;
+                Response.Cookies["customerCookie"]["customerID"] = customerID;
+                //Browser Cookie expires in 2 hours
+                Response.Cookies["customerCookie"].Expires = DateTime.Now.AddHours(2);
                 return RedirectToAction("Overview", "Customers", new { @id = currentCustomer.CustomerID });
             }
-
         }
 
 

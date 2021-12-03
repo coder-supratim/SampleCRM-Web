@@ -64,6 +64,8 @@ namespace NWTradersWeb.Controllers
             {
                 or.EmployeeID = Convert.ToInt32(salesPersonName.Split(separator)[1].Trim());
             }
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+            ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "CompanyName");
             ViewBag.salesPersonName = salesPersonName;
             return View("Index");
         }

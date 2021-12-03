@@ -7,7 +7,7 @@
 <h2>Order History</h2>
 
 <p>
-    @Html.ActionLink("Place a new Order", "Create")
+    @Html.ActionLink("Place a new Order", "Index", "Products")
 </p>
 <table class="table">
     <tr>
@@ -42,7 +42,7 @@
             @Html.DisplayNameFor(model => model.ShipCountry)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Customer.CompanyName)
+            Customer @Html.DisplayNameFor(model => model.Customer.CompanyName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Employee.FirstName)
@@ -51,7 +51,7 @@
             @Html.DisplayNameFor(model => model.Employee.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Shipper.CompanyName)
+            Shipment @Html.DisplayNameFor(model => model.Shipper.CompanyName)
         </th>
         <th></th>
     </tr>
