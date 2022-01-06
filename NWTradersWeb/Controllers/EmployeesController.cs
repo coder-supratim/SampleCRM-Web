@@ -147,12 +147,27 @@ namespace NWTradersWeb.Controllers
                 ViewBag.currentEmployeeRecentProducts = currentEmployeeRecentProducts.Take(5).ToList();
                 ViewBag.currentEmployeeFrequentProducts = currentEmployeeFrequentProducts.Take(5).ToList();
                 ViewBag.currentEmployeeOrders = currentEmployeeOrders.Take(5).ToList();
-
+                System.Diagnostics.Debug.WriteLine("Output of method TopProducts(): " + TopProducts());
                 return View(currentEmployee);
 
             }
 
 
+        }
+
+        public List<string> TopProducts()
+        {
+            List<string> topProducts = new List<string>();
+            topProducts =
+             db.
+             Products.
+             Where(p => p.Discontinued == false).
+             OrderBy(p => p.ProductName).
+             Select(p => p.ProductName).
+             Distinct().Take(5).
+             ToList();
+
+            return topProducts;
         }
 
         public int CountOccurences(List<int> listNumbers, int focalNumber)

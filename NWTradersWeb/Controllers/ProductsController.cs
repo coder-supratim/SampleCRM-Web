@@ -14,6 +14,30 @@ namespace NWTradersWeb.Controllers
     {
         private NorthwindEntities db = new NorthwindEntities();
 
+
+        public ActionResult Index(string searchCompanyName = "")
+        {
+
+            IEnumerable<Customer> theCustomers = db.Customers.
+             OrderBy(c => c.CompanyName).
+             Select(c => c).ToList();
+
+
+            if (theCustomers.Count() > 0)
+                if (string.IsNullOrEmpty(searchCompanyName) == false)
+                {
+                    theCustomers = theCustomers.
+                     Where(c => c.CompanyName.StartsWith(searchCompanyName)).OrderBy(c => c.CompanyName).
+                     Select(c => c);
+                }
+
+            ViewBag.searchCompanyName = searchCompanyName;  // code using ViewBag
+            String searchCompanyNameInSession = Session["searchCompanyName"] as String;
+            // code using Session class
+
+            return View(theCustomers.ToList());
+        }
+
         // GET: Products
         public ActionResult Index(string searchProductName = "", string searchCategoryName = "")
         {

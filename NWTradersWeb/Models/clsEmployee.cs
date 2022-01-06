@@ -8,32 +8,24 @@ using System.Web.Mvc;
 namespace NWTradersWeb.Models
 {
 
-    /// Annotations MetaData and Decorations for EmpCode.
     public class EmployeeMetadata
     {
 
-        /// <summary>
-        /// User Name
-        /// Required, Minimum - 5 characters
-        /// </summary>
-        [Display(Name = "Employee ID")]
-        [Required(ErrorMessage = "The Employee ID is required")]
-        [StringLength(5, MinimumLength = 3, ErrorMessage = "Employee ID must have atleast 3 characters")]
-        public string EmployeeID;
+      
+       [Display(Name = "First Name")]
+       [Required(ErrorMessage = "Employee First Name is required")]
+        [StringLength(10)]
+        public string FirstName;
 
-        /// <summary>
-        /// Company Name- 
-        /// Required, Minimum - 5 characters
-        /// </summary>
+      
         [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "The Last Name is required")]
+        [Required(ErrorMessage = "Employee Last Name is required")]
         [StringLength(20)]
         public string LastName;
 
-        [Display(Name = "First Name")]
-        [Required(ErrorMessage = "The First Name is required")]
-        [StringLength(20)]
-        public string FirstName;
+        [Display(Name = "Employee Title")]
+        [StringLength(30)]
+        public string Title;
 
     }
 
@@ -41,7 +33,6 @@ namespace NWTradersWeb.Models
     public partial class Employee
     {
 
-        public Order theCurrentOrder;
 
 
     }

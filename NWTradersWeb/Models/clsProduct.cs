@@ -9,31 +9,20 @@ namespace NWTradersWeb.Models
 {
 
     /// Annotations MetaData and Decorations for EmpCode.
-    public class ProductMetadata
+    public class SupplierMetadata
     {
 
-        [Display(Name = "Product ID")]
-        [Required(ErrorMessage = "The Product ID is required")]
-        public int ProductID;
+       
 
-        [Display(Name = "Product Name")]
-        [Required(ErrorMessage = "The Product Name is required")]
-        [StringLength(20)]
-        public string ProductName;
-
-        [Display(Name = "Quantity Per Unit")]
-        [Required(ErrorMessage = "Quantity Per Unit is required")]
-        [StringLength(20)]
-        public string QuantityPerUnit;
-
-        [Display(Name = "Units In Stock")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Units In Stock cannot contain letters")]
-        public int UnitsInStock;
+        [Display(Name = "Company Name")]
+        [Required(ErrorMessage = "The Company Name is required")]
+        [StringLength(40)]
+        public string CompanyName;
 
     }
 
-    [MetadataType(typeof(ProductMetadata))]
-    public partial class Product
+    [MetadataType(typeof(SupplierMetadata))]
+    public partial class Supplier
     {
 
     }
